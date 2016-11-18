@@ -2,11 +2,12 @@
 
 var _scoreboard = require("./scoreboard");
 
-var score = _interopRequireWildcard(_scoreboard);
+var _scoreboard2 = _interopRequireDefault(_scoreboard);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log("2π = " + score.sum(score.pi, score.pi));
+var game = new _scoreboard2.default(2);
 
-console.log('here');
+//ui.visualise(game.start());
+game.start();
 //# sourceMappingURL=app.js.map

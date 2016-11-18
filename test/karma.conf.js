@@ -14,14 +14,18 @@ module.exports = function(config) {
     // testing framework to use (jasmine/mocha/qunit/...)
     // as well as any additional frameworks (requirejs/chai/sinon/...)
     frameworks: [
-      'jasmine'
+      'jasmine',
+      'browserify'
     ],
 
     // list of files / patterns to load in the browser
     files: [
-        '../dist/js/module.js',
-        'spec/test_module.js'
+        'spec/test.js'
     ],
+
+    preprocessors: {
+      'spec/test.js': [ 'browserify' ]
+    },
 
     // list of files / patterns to exclude
     exclude: [
@@ -45,7 +49,8 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       'karma-phantomjs-launcher',
-      'karma-jasmine'
+      'karma-jasmine',
+      'karma-browserify'
     ],
 
     // Continuous Integration mode

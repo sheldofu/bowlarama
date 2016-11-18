@@ -1,2 +1,6 @@
-import * as score from "./scoreboard";
-console.log(score.sum(3, 4));
+import Game from "./scoreboard";
+
+var game = new Game(2);
+
+//ui.visualise(game.start());
+game.start();

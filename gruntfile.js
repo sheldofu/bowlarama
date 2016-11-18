@@ -31,14 +31,15 @@ module.exports = function(grunt) {
     dist: {
       files: {
         "dist/js/app.js": "scripts/main.js",
-        "dist/js/scoreboard.js": "scripts/scoreboard.js"
+        "dist/js/scoreboard.js": "scripts/scoreboard.js",
+        "dist/js/player.js": "scripts/player.js"
       }
     }
   },
 
   browserSync: {
       bsFiles: {
-          src : 'dist/css/*.css'
+          src : ['dist/css/*.css','dist/js/*.css']
       },
       options: {
           watchTask: true,
@@ -49,14 +50,14 @@ module.exports = function(grunt) {
   },
 
   browserify: {
-      'dist/js/module.js': ['dist/js/app.js'],
-      'test/spec/test_module.js': ['test/spec/test.js']
+      'dist/js/module.js': ['dist/js/app.js']
+      //'test/spec/test_module.js': ['test/spec/test.js']
   },
 
   watch: {
     scripts: {
-      files: ['stylesheets/*.scss'],
-      tasks: ['sass'],
+      files: ['stylesheets/*.scss','scripts/*.js'],
+      tasks: ['sass','babel','browserify'],
       options: {
         spawn: false
       },
