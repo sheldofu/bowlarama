@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../scripts/scoreboard.js"],"names":["sum","x","y","pi"],"mappings":";;;;;QACgBA,G,GAAAA,G;AADhB;AACO,SAASA,GAAT,CAAaC,CAAb,EAAgBC,CAAhB,EAAmB;AACxB,SAAOD,IAAIC,CAAX;AACD;AACM,IAAIC,kBAAK,QAAT","file":"scoreboard.js","sourcesContent":["// scoreboard.js\r\nexport function sum(x, y) {\r\n  return x + y;\r\n}\r\nexport var pi = 3.141593;"]}
