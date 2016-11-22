@@ -1,6 +1,7 @@
 import Game from "./scoreboard";
+import Anim from "./anim";
 
 var game = new Game(2);
 
-//ui.visualise(game.start());
-game.start();
+var anim = new Anim(game.start());
+

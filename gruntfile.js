@@ -32,7 +32,8 @@ module.exports = function(grunt) {
       files: {
         "dist/js/app.js": "scripts/main.js",
         "dist/js/scoreboard.js": "scripts/scoreboard.js",
-        "dist/js/player.js": "scripts/player.js"
+        "dist/js/player.js": "scripts/player.js",
+        "dist/js/anim.js": "scripts/anim.js"
       }
     }
   },

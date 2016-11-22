@@ -20,15 +20,11 @@ var Game = function () {
     _classCallCheck(this, Game);
 
     this.players = [];
-    console.log(players + 'k');
     for (var i = 0; i < players; i++) {
       console.log(i);
       this.players[i] = new _player2.default('Player ' + i);
     }
-    this.players[0].turn = true;
-    console.log(this.players);
     this.totalFrames = 10;
-    this.currentFrame = 1;
   }
 
   _createClass(Game, [{
@@ -37,13 +33,33 @@ var Game = function () {
       var _this = this;
 
       for (var i = 0; i < this.totalFrames; i++) {
-        console.log(i, " in for loop");
         this.players.forEach(function (player) {
-          console.log('in foreach');
           _this.takeFrame(player);
         });
       }
+
+      //last frame
+      this.players.forEach(function (player) {
+        var i = 20;
+        //if players penultimate score is 10, roll ball twice
+        if (player.score[i] + player.score[i - 1] === 10) {
+          _this.rollBallRandom(player);
+        }
+        //if players last frame adds up to 10, roll ball again
+        if (player.score[i - 1] === 10) {
+          _this.rollBallRandom(player);
+        }
+        player.finalScore();
+      });
+
       return this.players;
+    }
+  }, {
+    key: 'rollBallX',
+    value: function rollBallX(player, pins, rolls) {
+      for (var i = 1; i < rolls; i++) {
+        this.rollBallRandom(player, pins);
+      }
     }
   }, {
     key: 'rollBall',
@@ -52,19 +68,22 @@ var Game = function () {
     }
   }, {
     key: 'rollBallRandom',
-    value: function rollBallRandom() {
-      player.addScore(Math.round(Math.random() * 10));
+    value: function rollBallRandom(player, remainingPins) {
+      var pins = Math.round(Math.random() * remainingPins);
+      this.rollBall(player, pins);
+      return pins;
     }
   }, {
     key: 'takeFrame',
-    value: function takeFrame(player, forcedNumber) {
-      currentFrame = currentFrame + 1;
-      var remainingPins = 10 - this.rollBallRandom();
-      if (remainingPins !== 0) {
-        remainingPins = rollBallRandom(remainingPins);
+    value: function takeFrame(player) {
+
+      var remainingPins = 10 - this.rollBallRandom(player, 10);
+      console.log(remainingPins);
+      if (remainingPins === 0) {
+        remainingPins = 10;
       }
-      player.addScore = remainingPins;
-      console.log('taking turn', player, turnScore);
+      this.rollBallRandom(player, remainingPins);
+      console.log('taking turn', player);
     }
   }]);
 
