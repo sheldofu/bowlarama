@@ -6,6 +6,7 @@ export default class Anim {
     this.currentPlayer = 0;
     this.currentRoll = 0;
     this.bindUI();
+    this.scoreSetup();
   }
 
   bindUI() {
@@ -17,9 +18,19 @@ export default class Anim {
     next.addEventListener("click", this.turnLoop.bind(this));
   }
 
+  scoreSetup() {
+    for (let i = 0; i < this.players.length; i++) {
+      var row = document.createElement("tr");
+      row.id = "player"+i;
+      document.getElementById('scoreTable').appendChild(row);
+      var totalScore = document.createElement("td");
+      totalScore.innerHTML = this.players[i].totalScore();
+      document.getElementById('player' + i).appendChild(totalScore);
+    }
+  }
+
   rollBall() {
     this.ball.classList.add("bowling");
-    console.log(this.ball);
   }
 
   turnLoop() {
@@ -30,16 +41,17 @@ export default class Anim {
   }
 
   scoreReveal() {
-    console.log(this.players);
-    var playerEqualiser = Math.round((this.currentRoll+1)/this.players.length); //change to number of players
-    document.querySelector('.player' +this.currentPlayer+ ' td:nth-child('+(playerEqualiser)+')').innerHTML = this.players[this.currentPlayer].score[playerEqualiser-1]
+    var score = document.createElement("td");
+    var playerEqualiser = Math.ceil((this.currentRoll+1)/this.players.length);
+    score.innerHTML = this.players[this.currentPlayer].score[playerEqualiser-1];
+    document.getElementById('player'+this.currentPlayer).appendChild(score);
   }
 
   nextPlayer() {
     if (this.currentPlayer + 1 === this.players.length) {
       this.currentPlayer = 0;
     } else {
-      this.currentPlayer = this.currentPlayer + 1;
+      this.currentPlayer += 1;
     }
   }
 
@@ -51,7 +63,7 @@ export default class Anim {
   }
 
   nextTurn() {
-    var pinScore = this.players[this.currentPlayer].score[Math.round(this.currentRoll/this.players.length)];
+    var pinScore = this.players[this.currentPlayer].score[Math.round((this.currentRoll-1)/this.players.length)];
     this.currentRoll = this.currentRoll + 1;
     this.pinsKnocked(pinScore);
     if (pinScore === 0) {

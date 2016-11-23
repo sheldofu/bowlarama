@@ -1,7 +1,8 @@
 import Game from "./scoreboard";
 import Anim from "./anim";
 
-var game = new Game(2);
+//param number of players
+var game = new Game(3);
 
 var anim = new Anim(game.start());
 

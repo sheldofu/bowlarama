@@ -17,6 +17,7 @@ var Anim = function () {
     this.currentPlayer = 0;
     this.currentRoll = 0;
     this.bindUI();
+    this.scoreSetup();
   }
 
   _createClass(Anim, [{
@@ -30,10 +31,21 @@ var Anim = function () {
       next.addEventListener("click", this.turnLoop.bind(this));
     }
   }, {
+    key: 'scoreSetup',
+    value: function scoreSetup() {
+      for (var i = 0; i < this.players.length; i++) {
+        var row = document.createElement("tr");
+        row.id = "player" + i;
+        document.getElementById('scoreTable').appendChild(row);
+        var totalScore = document.createElement("td");
+        totalScore.innerHTML = this.players[i].totalScore();
+        document.getElementById('player' + i).appendChild(totalScore);
+      }
+    }
+  }, {
     key: 'rollBall',
     value: function rollBall() {
       this.ball.classList.add("bowling");
-      console.log(this.ball);
     }
   }, {
     key: 'turnLoop',
@@ -46,9 +58,10 @@ var Anim = function () {
   }, {
     key: 'scoreReveal',
     value: function scoreReveal() {
-      console.log(this.players);
-      var playerEqualiser = Math.round((this.currentRoll + 1) / this.players.length); //change to number of players
-      document.querySelector('.player' + this.currentPlayer + ' td:nth-child(' + playerEqualiser + ')').innerHTML = this.players[this.currentPlayer].score[playerEqualiser - 1];
+      var score = document.createElement("td");
+      var playerEqualiser = Math.ceil((this.currentRoll + 1) / this.players.length);
+      score.innerHTML = this.players[this.currentPlayer].score[playerEqualiser - 1];
+      document.getElementById('player' + this.currentPlayer).appendChild(score);
     }
   }, {
     key: 'nextPlayer',
@@ -56,7 +69,7 @@ var Anim = function () {
       if (this.currentPlayer + 1 === this.players.length) {
         this.currentPlayer = 0;
       } else {
-        this.currentPlayer = this.currentPlayer + 1;
+        this.currentPlayer += 1;
       }
     }
   }, {
@@ -70,7 +83,7 @@ var Anim = function () {
   }, {
     key: 'nextTurn',
     value: function nextTurn() {
-      var pinScore = this.players[this.currentPlayer].score[Math.round(this.currentRoll / this.players.length)];
+      var pinScore = this.players[this.currentPlayer].score[Math.round((this.currentRoll - 1) / this.players.length)];
       this.currentRoll = this.currentRoll + 1;
       this.pinsKnocked(pinScore);
       if (pinScore === 0) {

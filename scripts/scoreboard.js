@@ -5,62 +5,69 @@ export default class Game {
   
   constructor(players) {
   	this.players = [];
+    this.currentPlayer = 0;
     for (let i=0; i < players; i++){
-    	console.log(i);
     	this.players[i] = new Player('Player ' + i); 
     }
     this.totalFrames = 10; 
   }
 
   start() {
-  	for (var i = 0; i < this.totalFrames; i++) { 	
-	  	this.players.forEach((player) => {
-  		 	this.takeFrame(player);	
-	    });
+  	for (var i = 0; i < this.totalFrames * this.players.length; i++) { 	
+  		 	this.takeFrame();
+        this.nextPlayer();
 	  }
-
-    //last frame
-    this.players.forEach((player) => {
-        let i = 20;
-        //if players penultimate score is 10, roll ball twice
-        if (player.score[i] + player.score[i-1] === 10) {
-          this.rollBallRandom(player);        
-        }
-        //if players last frame adds up to 10, roll ball again
-        if (player.score[i-1] === 10) {
-          this.rollBallRandom(player);        
-        }
-        player.finalScore()
-    });
-
-    return this.players
+    this.lastFrame();
+    return this.players;
   }
 
-  rollBallX(player, pins, rolls) {
-    for (let i = 1; i < rolls; i++) {
-      this.rollBallRandom(player, pins);
+  nextPlayer() {
+    if (this.currentPlayer + 1 === this.players.length) {
+      this.currentPlayer = 0;
+    } else {
+      this.currentPlayer += 1;
     }
   }
 
-  rollBall(player, pins) {
-    player.addScore(pins);
+  lastFrame() {
+    //last frame
+    this.players.forEach((player, cur) => {
+        let i = player.score.length - 1;
+        this.currentPlayer = cur;
+        //if players last frame adds up to 10, roll ball again
+        if (player.score[i] + player.score[i-1] === 10) {
+          this.rollBallRandom(10);
+        }
+        //if players penultimate score is 10, roll ball (will already have been rolled again)
+        if (player.score[i-1] === 10) {
+          this.rollBallRandom(10);
+        }
+        player.finalScore();
+    });
   }
 
-  rollBallRandom(player, remainingPins) {
+  rollBallX(pins, rolls) {
+    for (let i = 0; i < rolls; i++) {
+      this.rollBallRandom(pins);
+    }
+  }
+
+  rollBall(pins) {
+    this.players[this.currentPlayer].addScore(pins);
+  }
+
+  rollBallRandom(remainingPins) {
     var pins = Math.round(Math.random() * remainingPins);
-  	this.rollBall(player, pins);
+  	this.rollBall(pins);
     return pins;
   }
 
-  takeFrame(player) {
-
-    var remainingPins = 10 - this.rollBallRandom(player, 10);
-    console.log(remainingPins)
+  takeFrame() {
+    var remainingPins = 10 - this.rollBallRandom(10);
     if (remainingPins === 0) {
       remainingPins = 10;
     }
-    this.rollBallRandom(player, remainingPins);
-  	console.log('taking turn', player);
+    this.rollBallRandom(remainingPins);
   }
 
 }

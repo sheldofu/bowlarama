@@ -45,10 +45,12 @@ body {
     opacity: 1;
     top: 0px;
     left: 0px;
+    transform: rotate(0deg);
   }
   100% {
     opacity: 0;
-    top: -40px;
-    left: 40px;
+    top: -30px;
+    left: 30px;
+    transform: rotate(110deg);
   }
 }

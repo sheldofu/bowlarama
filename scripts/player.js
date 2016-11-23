@@ -19,7 +19,7 @@ export default class Player {
   }
 
   finalScore() {
-	for (let i=0; i < 20; i++) {
+  	for (let i=0; i < 20; i++) {
   		if (i % 2 === 0) {
   			if (this.score[i] === 10 && i < 19) {
   				this.bonusPoints += this.score[i+1] + this.score[i+2]; 

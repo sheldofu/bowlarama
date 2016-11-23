@@ -10,7 +10,8 @@ var _anim2 = _interopRequireDefault(_anim);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var game = new _scoreboard2.default(2);
+//param number of players
+var game = new _scoreboard2.default(3);
 
 var anim = new _anim2.default(game.start());
 //# sourceMappingURL=app.js.map
